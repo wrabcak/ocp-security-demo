@@ -9,22 +9,28 @@ spec:
     command: ["/bin/bash"]
     args: ["-c", "sleep 3600"]
     volumeMounts:
-      - mountPath: "/volume"
-        name: shared-volume
+      - mountPath: "/hostdir"
+        name: hostdir
     securityContext:
       seLinuxOptions:
         user: system_u
         role: system_r
         type: container_t
-        level: s0:c1,c3
+        level: s0:c1
   - name: coke
     image: "registry.access.redhat.com/ubi9/ubi-minimal:latest"
     command: ["/bin/bash"]
     args: ["-c", "sleep 3600"]
     volumeMounts:
-      - mountPath: "/volume"
-        name: shared-volume
+      - mountPath: "/hostdir"
+        name: hostdir
+    securityContext:
+      seLinuxOptions:
+        user: system_u
+        role: system_r
+        type: container_t
+        level: s0:c3
   volumes:
-    - name: shared-volume
-      emptyDir: {}
+    - name: hostdir
+      MountPath: /mnt/hostdir
   restartPolicy: Never
