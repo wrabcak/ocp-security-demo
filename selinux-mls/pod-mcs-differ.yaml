@@ -24,7 +24,19 @@ spec:
     volumeMounts:
       - mountPath: "/volume"
         name: shared-volume
+    securityContext:
+      seLinuxOptions:
+        user: system_u
+        role: system_r
+        type: container_t
+        level: s0:c3,c6
   volumes:
     - name: shared-volume
       emptyDir: {}
+    - securityContext:
+      seLinuxOptions:
+        user: system_u
+        role: system_r
+        type: container_t
+        level: s0:c3
   restartPolicy: Never
