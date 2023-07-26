@@ -3,6 +3,9 @@ kind: Pod
 metadata:
   name: beverages
 spec:
+  securityContext:
+      seLinuxOptions:
+          level: s0:c3
   containers:
   - name: pepsi
     image: "registry.access.redhat.com/ubi9/ubi-minimal:latest"
@@ -33,10 +36,4 @@ spec:
   volumes:
     - name: shared-volume
       emptyDir: {}
-      securityContext:
-        seLinuxOptions:
-          user: system_u
-          role: object_r
-          type: container_file_t
-          level: s0:c3
   restartPolicy: Never
